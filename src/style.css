@@ -21,3 +21,67 @@ body{
     color: rgb(95, 95, 95);
     text-shadow:  10px 10px 8px #181818;
 }
+
+.title::after{
+    content: "_";
+    -webkit-animation: 1s blink step-end infinite;
+    -moz-animation: 1s blink step-end infinite;
+    -ms-animation: 1s blink step-end infinite;
+    -o-animation: 1s blink step-end infinite;
+    animation: 1s blink step-end infinite;
+}
+
+@keyframes blink {
+    from, to {
+        color: transparent;
+        text-shadow: none;
+    }
+    50% {
+        color: rgb(95, 95, 95);
+        text-shadow:  10px 10px 8px #181818;
+    }
+  }
+  
+  @-moz-keyframes blink {
+    from, to {
+        color: transparent;
+        text-shadow: none;
+    }
+    50% {
+        color: rgb(95, 95, 95);
+        text-shadow:  10px 10px 8px #181818;
+    }
+  }
+  
+  @-webkit-keyframes blink {
+    from, to {
+        color: transparent;
+        text-shadow: none;
+    }
+    50% {
+        color: rgb(95, 95, 95);
+        text-shadow:  10px 10px 8px #181818;
+    }
+  }
+  
+  @-ms-keyframes blink {
+    from, to {
+        color: transparent;
+        text-shadow: none;
+    }
+    50% {
+        color: rgb(95, 95, 95);
+        text-shadow:  10px 10px 8px #181818;
+    }
+  }
+  
+  @-o-keyframes blink {
+    from, to {
+        color: transparent;
+        text-shadow: none;
+    }
+    50% {
+        color: rgb(95, 95, 95);
+        text-shadow:  10px 10px 8px #181818;
+    }
+  }
