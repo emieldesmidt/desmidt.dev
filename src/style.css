@@ -1,0 +1,23 @@
+body{
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: consolas;
+}
+
+.container{
+    width: 1000px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+}
+
+.title{
+    font-size: 6em;
+    color: rgb(95, 95, 95);
+    text-shadow:  10px 10px 8px #181818;
+}
