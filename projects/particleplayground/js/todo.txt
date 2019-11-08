@@ -1,0 +1,6 @@
+spread instead of speed diff
+interactive ui using drag/drop
+optimisation
+solids interaction between field and particles
+coloured particles
+clear screen
