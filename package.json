@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Web page for the trustchain-dao ",
   "main": "sass/mystyle.scss",
+  "homepage": "http://emieldesmidtde.github.io/emieldesmidtde.github.io",
   "keywords": [
     "dao",
     "trustchain"
