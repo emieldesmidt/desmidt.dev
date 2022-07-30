@@ -106,13 +106,16 @@
   }
 
   console.log(colours)
-  shu = shuffler(colours.slice(0, 3))
-  result = check(shu, colours.slice(0, 3))
+  const answer = shuffler(colours.slice(0, 4))
+  const ans_result = check(answer, answer)
+  const shu = shuffler(colours.slice(0, 4))
+  const shu_result = check(shu, answer)
 
   draw_colour_deck();
   draw_blank_row()
 
-  previous_guesses.push({colours: shu, correct_pos: result.correct_pos, correct_col: result.correct_col})
+  previous_guesses.push({colours: shu, correct_pos: shu_result.correct_pos, correct_col: shu_result.correct_col})
+  previous_guesses.push({colours: answer, correct_pos: ans_result.correct_pos, correct_col: ans_result.correct_col})
 
   previous_guesses.forEach((guess, index) => {
     draw_previous_row(guess.colours, guess.correct_pos, guess.correct_col, index + 1)
