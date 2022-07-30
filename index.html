@@ -15,7 +15,10 @@
 <script>
   const canvas = document.getElementById("myCanvas");
   const ctx = canvas.getContext("2d");
+  const spacing = 65
   const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
+
+  let previous_guesses = []
 
   const shuffler = (array) => {
     return array.slice().sort( () => Math.random() - 0.5);
@@ -29,13 +32,30 @@
   resize()
   window.addEventListener('resize', resize)
 
+  const draw_colour_deck = () => {
+    const columns = 4
+
+    const x_offset = (canvas.width / 2) - 2 * spacing
+    const y_offset = (canvas.height / 2) - 3 * spacing
+
+    for (let colour = 0; colour < colours.length; colour++) {
+      const x = (colour) % columns
+      const y = Math.floor(colour / columns)
+
+      ctx.beginPath();
+      ctx.arc(x_offset + x * spacing, y_offset + y * spacing, 20, 0, Math.PI*2, false);
+      ctx.fillStyle = colours[colour]
+      ctx.fill();
+      ctx.closePath();
+    }
+  }
+  
   const draw_blank_row = () => {
     ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
     
     const steps = 4
-    const spacing = 65
 
-    x_positions = [...Array(steps).keys()].map(pos => (canvas.width / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
+    const x_positions = [...Array(steps).keys()].map(pos => (canvas.width / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
 
     for (let step = 0; step < steps; step++) {
       ctx.beginPath();
@@ -48,7 +68,6 @@
   const draw_previous_row = (colours, correct_pos, correct_col, row) => {
     
     const steps = 6
-    const spacing = 65
     const height = canvas.height / 2 + (row * spacing)
 
     x_positions = [...Array(steps).keys()].map(pos => (canvas.width / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
@@ -70,9 +89,6 @@
 
   }
 
-  draw_blank_row()
-  draw_previous_row(colours.slice(0, 4), 4, 1, 1)
-
   const check = (attempt, answer) => {
     let correct_col = 0
     let correct_pos = 0
@@ -90,9 +106,19 @@
   }
 
   console.log(colours)
-  shu = shuffler(colours)
-  console.log(shu)
-  console.log(check(shu, colours))
+  shu = shuffler(colours.slice(0, 3))
+  result = check(shu, colours.slice(0, 3))
+
+  draw_colour_deck();
+  draw_blank_row()
+
+  previous_guesses.push({colours: shu, correct_pos: result.correct_pos, correct_col: result.correct_col})
+
+  previous_guesses.forEach((guess, index) => {
+    draw_previous_row(guess.colours, guess.correct_pos, guess.correct_col, index + 1)
+  })
+
+
 
 </script>
 
