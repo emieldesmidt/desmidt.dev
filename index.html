@@ -1,175 +1,100 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Emiel de Smidt</title>
-    <link rel="stylesheet" href="css/mystyles.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-  </head>
-  <body>
-    <section class="hero is-fullheight is-warning is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-4-desktop is-offset-2-desktop">
-              <h1 class="title is-2 is-spaced greeting">
-                > Hello There
-              </h1>
-              <h2 class="subtitle is-4">
-                  Welcome to my personal page!  
+<head>
+    <meta charset="utf-8" />
+    <title>Mastermind</title>
+    <style>
+      * { padding: 0; margin: 0; }
+      canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
 
-                  <br>
-                  <strong>Scroll down</strong> to find out more about me.
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+<canvas id="myCanvas" width="480" height="320"></canvas>
 
-    <section class="section">
-      <div class="container">
-          <div class="columns">
-            <div class="column is-8-desktop is-offset-2-desktop">
-              <h1 class="title is-2 is-spaced">
-                About me
-              </h1>
-              <p class="subtitle is-5">
-                I'm a Cyber Security master student at Delft University of Technology who is passionate about anything tech.
-                <br>
-                <br>
-                Over the last few years I've enjoyed many opportunities to explore the fantastic field of Computer Science, both here in Delft as well as at the University of Sydney. On this page you'll find exactly what I've learned and what I enjoy.
-              </p>
-            </div>
-          </div>
-        </div>
-    </section>
+<script>
+  const canvas = document.getElementById("myCanvas");
+  const ctx = canvas.getContext("2d");
+  const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
+
+  const shuffler = (array) => {
+    return array.slice().sort( () => Math.random() - 0.5);
+  }
+
+  const resize = () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  resize()
+  window.addEventListener('resize', resize)
+
+  const draw_blank_row = () => {
+    ctx.strokeStyle = "rgba(0, 0, 0, 0.5)";
     
-    <section class="section">
-      <div class="container">
-        <div class="columns">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <div class="tile is-child box">
-                      <p class="title">Experience</p>
-                      <p>Through my curriculum I've experienced and enjoyed different sides of the cyber security field, ranging from cryptography to management. Some courses offer a true deep-dive in the technology, Advanced Network Security is a prime example of this. Over the course of 8 weeks we have build a complete IDS from scratch that deals with a wide range of attacks and intrusions. For my master thesis I’ve developed Periscope, a protocol that allows for the tunneling of network traffic over Bitcoin’s off-chain solution, Lightning. Tunneled data is embedded in a stream of microtransactions and can withstand a censor’s attempt to interfere with the internet traffic and repress the user.</p>
-                      <br>
-                      <p>In order to gain experience, and get a feel for the industry, I've been working at Fox-IT starting January 2020. As a security specialist in the SOC (Security Operation Center), I've put my skills and knowledge from my education to use, whilst gaining this at a rapid rate.</p>
-                      <br>
-                      <p>To get more technical insight and a better view from the hacker's point of view I've become OSCP certified in may 2021. Furthermore, I've been selected as a Tech Ambassador by the ASML scholarship programme, where we focus on the skills that you do not learn through education.</p>
-                    </div>
-                  </div>  
-                <div class="tile is-4 is-vertical is-parent">
-                  <div class="tile is-child box">
-                    <p class="title">Skills</p>
-                    <p>Cryptography</p>
-                    <p>Object Oriented Programming</p>
-                    <p>Computer Networks</p>
-                    <p>Virtual Reality</p>
-                    <p>Blockchain Engineering</p>
-                    <p>Continuous Integations</p>
-                    <p>Web Development</p>
-                  </div>
-                  <div class="tile is-child box">
-                    <p class="title">Interests</p>
-                    <p>All things concerning cyber security and technology, and nerdy projects.</p>
-                  </div>
-                </div>
-                
-              </div>
-              
-          </div>
-        </div>
-      </div>
-    </section>
+    const steps = 4
+    const spacing = 65
+
+    x_positions = [...Array(steps).keys()].map(pos => (canvas.width / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
+
+    for (let step = 0; step < steps; step++) {
+      ctx.beginPath();
+      ctx.arc(x_positions[step], canvas.height / 2, 20, 0, Math.PI*2, false);
+      ctx.stroke();
+      ctx.closePath();
+    }
+  }
+
+  const draw_previous_row = (colours, correct_pos, correct_col, row) => {
     
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-              <div class="column is-8-desktop is-offset-2-desktop">
-                <h1 class="title is-2 is-spaced">
-                  Notable Projects and Miscellaneous 
-                </h1>
-                <p class="subtitle is-5">
-                  Some more serious than others, nevertheless all equally fun.
-                </p>
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <a href="projects/particleplayground/particleplayground.html">
-                        <img src="images/particle.png" alt="Placeholder image">
-                      </a>  
-                      </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4">Particle Playground</p>
-                        <p class="subtitle is-6">Interactive physics simulator</p>
-                      </div>
-                    </div>
-                    <div class="content">
-                      Web-based physics simulator written in Javascript. Particles orbit around a body. The user can experiment by changing parameters and observe changes in the system. <a href="projects/particleplayground/particleplayground.html">Try it out</a> (best viewed on non-mobile)!
-                      <br>
-                    </div>
-                  </div>
-                </div>
-                <br>
+    const steps = 6
+    const spacing = 65
+    const height = canvas.height / 2 + (row * spacing)
 
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="images/startup.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4">ELI</p>
-                        <p class="subtitle is-6">Immersive VR learning lab </p>
-                      </div>
-                    </div>
-                    <div class="content">
-                      Virtual reality lab environment where students can practice and perfect their lab skills withouth being held back by the fear of making (costly) mistakes. Made in collaboration with the University of Sydney.
-                      <br>
-                    </div>
-                  </div>
-                </div>
-                <br>
+    x_positions = [...Array(steps).keys()].map(pos => (canvas.width / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
 
+    ctx.fillStyle = 'gray'
+    ctx.font = '40pt Calibri';
+    ctx.fillText(correct_pos, x_positions[0]- 15, height + 15);
 
-                
-              </div>
-            </div>
-          </div>
-      </section>
+    for (let step = 0; step < steps - 2; step++) {
+      ctx.beginPath();
+      ctx.arc(x_positions[step + 1], height, 20, 0, Math.PI*2, false);
+      ctx.fillStyle = colours[step]
+      ctx.fill();
+      ctx.closePath();
+    }
+    
+    ctx.fillStyle = 'gray'
+    ctx.fillText(correct_col, x_positions[5], height + 15);
 
+  }
 
+  draw_blank_row()
+  draw_previous_row(colours.slice(0, 4), 4, 1, 1)
 
-    <footer class="footer has-text-centered">
-      <div class="container">
-         <div class="columns">
-          <div class="column is-8-desktop is-offset-2-desktop">
-              <p class="subtitle is-5">
-                Let's get in touch!
-            </p>
-            <p >
-              <small>
-                Send me an email! <a href="mailto:desmidt.emiel@gmail.com">desmidt.emiel@gmail.com</a>
-              </small>
-            </p>
-            <p style="margin-top: 1rem;">
-              <a href="http://bulma.io">
-                <img src="made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+  const check = (attempt, answer) => {
+    let correct_col = 0
+    let correct_pos = 0
 
-    <script type="text/javascript" src="lib/main.js"></script>
-  </body>
+    for (var i = 0; i < attempt.length; i++) {
+      let attempt_i = attempt[i]
+      let answer_i = answer[i]
+
+      correct_pos += attempt_i === answer_i
+      correct_col += answer.includes(attempt_i)
+    }
+
+    correct_col -= correct_pos
+    return {correct_col: correct_col, correct_pos: correct_pos}
+  }
+
+  console.log(colours)
+  shu = shuffler(colours)
+  console.log(shu)
+  console.log(check(shu, colours))
+
+</script>
+
+</body>
 </html>
