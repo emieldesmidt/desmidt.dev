@@ -10,7 +10,7 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-      background-color: #f0f0f0;
+      background-color: #ffffff;
     }
   </style>
 </head>
@@ -81,11 +81,9 @@
     // game variables
     const answer = shuffler(colours.slice(0, 4))
     const ans_result = check(answer, answer)
-    const shu = shuffler(colours.slice(0, 4))
-    const shu_result = check(shu, answer)
-    
+
     let previous_guesses = []
-    let current_guess = [undefined, undefined, undefined, undefined] 
+    let current_guess = [undefined, undefined, undefined, undefined]
 
 
     const draw_blank_row = () => {
@@ -103,7 +101,23 @@
 
         blank_group.add(circle)
       }
+
+      const verify = new Konva.Circle({
+        x: deck_positions[deck_positions.length - 1].x + spacing,
+        y: deck_positions[deck_positions.length - 1].y,
+        radius: dot_radius,
+        stroke: 'gray',
+        strokeWidth: 1,
+        visible: false,
+        id: 'verify_button',
+      })
+      verify.on('click', function () {
+        console.log(check(current_guess, answer));
+      });
+
+      blank_group.add(verify)
       layer.add(blank_group)
+
     }
 
     const draw_colour_deck = () => {
@@ -140,18 +154,19 @@
             })
 
             current_guess[closest.position] = circle.fill()
-            console.log(current_guess)
           }
+
+          // if all four dots are set, enable the check button
+          let verify_button_visible = current_guess.filter(guess => guess != undefined).length == current_guess.length
+          stage.find('#verify_button')[0].visible(verify_button_visible)
         })
 
         // check for a dot being positioned out of a deck place
         circle.on('dragstart', (e) => {
           const closest = snap(circle.x(), circle.y())
 
-          if (closest.distance === 0) {
+          if (closest.distance === 0)
             current_guess[closest.position] = undefined
-            console.log(current_guess)
-          }
 
         })
 
@@ -210,7 +225,6 @@
     draw_blank_row()
     draw_colour_deck();
 
-    previous_guesses.push({ colours: shu, correct_pos: shu_result.correct_pos, correct_col: shu_result.correct_col })
     previous_guesses.push({ colours: answer, correct_pos: ans_result.correct_pos, correct_col: ans_result.correct_col })
 
     previous_guesses.forEach((guess, index) => {
