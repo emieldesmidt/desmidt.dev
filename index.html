@@ -35,6 +35,7 @@
       const spacing = 65
       const dots = 4
       const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
+      const snap_distance = 50
 
       let deck_positions = [...Array(dots).keys()].map(dot => 
         ({
@@ -81,8 +82,29 @@
       const shu_result = check(shu, answer)
       let previous_guesses = []
 
+      const draw_blank_row = () => {
+        const blank_group = new Konva.Group()
+
+        for (let dot = 0; dot < dots; dot++) {
+
+          const circle = new Konva.Circle({
+            x: deck_positions[dot].x,
+            y: deck_positions[dot].y,
+            radius: dot_radius,
+            stroke: 'gray',
+            strokeWidth: 1,
+          });
+
+          blank_group.add(circle)
+        }
+        layer.add(blank_group)
+
+      }
+
       const draw_colour_deck = () => {
         const columns = 4
+
+        const deck_group = new Konva.Group()
 
         const x_offset = (stage.width() / 2) - 2 * spacing
         const y_offset = (stage.height() / 2) - 3 * spacing
@@ -102,42 +124,33 @@
 
           circle.on('dragend', (e) => {
             const closest = snap(circle.x(), circle.y())
-            console.log(closest)
-            if (closest.distance < 100) {
+
+            if (closest.distance < snap_distance) {
               circle.position({
                 x: closest.x,
                 y: closest.y
-            })
+              })
             }
 
           })
 
-          layer.add(circle)
+          deck_group.add(circle)
         }
+
+        layer.add(deck_group)
+
       }
       
-      const draw_blank_row = () => {
 
-        for (let dot = 0; dot < dots; dot++) {
-
-          const circle = new Konva.Circle({
-            x: deck_positions[dot].x,
-            y: deck_positions[dot].y,
-            radius: dot_radius,
-            stroke: 'gray',
-            strokeWidth: 1,
-          });
-
-          layer.add(circle)
-        }
-      }
 
       const draw_previous_row = (colours, correct_pos, correct_col, row) => {
         
         const steps = 6
         const height = stage.height() / 2 + (row * spacing)
+        
+        const previous_guess_group = new Konva.Group()
 
-        x_positions = [...Array(steps).keys()].map(pos => (stage.width() / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
+        const x_positions = [...Array(steps).keys()].map(pos => (stage.width() / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
 
         const correct_post_text = new Konva.Text({
           x: x_positions[0] - 15,
@@ -146,7 +159,7 @@
           fontSize: 40,
           fontFamily: 'Calibri',
         })
-        layer.add(correct_post_text)
+        previous_guess_group.add(correct_post_text)
 
         for (let step = 0; step < steps - 2; step++) {
           const circle = new Konva.Circle({
@@ -156,7 +169,7 @@
             fill: colours[step],
           });
 
-          layer.add(circle)
+          previous_guess_group.add(circle)
         }
         
         const correct_col_text = new Konva.Text({
@@ -167,8 +180,9 @@
           fontFamily: 'Calibri',
         })
 
-        layer.add(correct_col_text)
+        previous_guess_group.add(correct_col_text)
 
+        layer.add(previous_guess_group)
       }
 
 
