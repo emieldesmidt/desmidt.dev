@@ -1,175 +1,201 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Emiel de Smidt</title>
-    <link rel="stylesheet" href="css/mystyles.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://unpkg.com/konva@8.3.5/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Master the mind!</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        background-color: #f0f0f0;
+      }
+    </style>
   </head>
   <body>
-    <section class="hero is-fullheight is-warning is-bold">
-      <div class="hero-body">
-        <div class="container">
-          <div class="columns">
-            <div class="column is-4-desktop is-offset-2-desktop">
-              <h1 class="title is-2 is-spaced greeting">
-                > Hello There
-              </h1>
-              <h2 class="subtitle is-4">
-                  Welcome to my personal page!  
+    <div id="container"></div>
+    <script>
 
-                  <br>
-                  <strong>Scroll down</strong> to find out more about me.
-              </h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+      // stage and layer construction
+      const width = window.innerWidth;
+      const height = window.innerHeight;
 
-    <section class="section">
-      <div class="container">
-          <div class="columns">
-            <div class="column is-8-desktop is-offset-2-desktop">
-              <h1 class="title is-2 is-spaced">
-                About me
-              </h1>
-              <p class="subtitle is-5">
-                I'm a Cyber Security master student at Delft University of Technology who is passionate about anything tech.
-                <br>
-                <br>
-                Over the last few years I've enjoyed many opportunities to explore the fantastic field of Computer Science, both here in Delft as well as at the University of Sydney. On this page you'll find exactly what I've learned and what I enjoy.
-              </p>
-            </div>
-          </div>
-        </div>
-    </section>
-    
-    <section class="section">
-      <div class="container">
-        <div class="columns">
-            <div class="tile is-ancestor">
-                <div class="tile is-parent">
-                    <div class="tile is-child box">
-                      <p class="title">Experience</p>
-                      <p>Through my curriculum I've experienced and enjoyed different sides of the cyber security field, ranging from cryptography to management. Some courses offer a true deep-dive in the technology, Advanced Network Security is a prime example of this. Over the course of 8 weeks we have build a complete IDS from scratch that deals with a wide range of attacks and intrusions. For my master thesis I’ve developed Periscope, a protocol that allows for the tunneling of network traffic over Bitcoin’s off-chain solution, Lightning. Tunneled data is embedded in a stream of microtransactions and can withstand a censor’s attempt to interfere with the internet traffic and repress the user.</p>
-                      <br>
-                      <p>In order to gain experience, and get a feel for the industry, I've been working at Fox-IT starting January 2020. As a security specialist in the SOC (Security Operation Center), I've put my skills and knowledge from my education to use, whilst gaining this at a rapid rate.</p>
-                      <br>
-                      <p>To get more technical insight and a better view from the hacker's point of view I've become OSCP certified in may 2021. Furthermore, I've been selected as a Tech Ambassador by the ASML scholarship programme, where we focus on the skills that you do not learn through education.</p>
-                    </div>
-                  </div>  
-                <div class="tile is-4 is-vertical is-parent">
-                  <div class="tile is-child box">
-                    <p class="title">Skills</p>
-                    <p>Cryptography</p>
-                    <p>Object Oriented Programming</p>
-                    <p>Computer Networks</p>
-                    <p>Virtual Reality</p>
-                    <p>Blockchain Engineering</p>
-                    <p>Continuous Integations</p>
-                    <p>Web Development</p>
-                  </div>
-                  <div class="tile is-child box">
-                    <p class="title">Interests</p>
-                    <p>All things concerning cyber security and technology, and nerdy projects.</p>
-                  </div>
-                </div>
-                
-              </div>
-              
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section class="section">
-        <div class="container">
-            <div class="columns">
-              <div class="column is-8-desktop is-offset-2-desktop">
-                <h1 class="title is-2 is-spaced">
-                  Notable Projects and Miscellaneous 
-                </h1>
-                <p class="subtitle is-5">
-                  Some more serious than others, nevertheless all equally fun.
-                </p>
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <a href="projects/particleplayground/particleplayground.html">
-                        <img src="images/particle.png" alt="Placeholder image">
-                      </a>  
-                      </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4">Particle Playground</p>
-                        <p class="subtitle is-6">Interactive physics simulator</p>
-                      </div>
-                    </div>
-                    <div class="content">
-                      Web-based physics simulator written in Javascript. Particles orbit around a body. The user can experiment by changing parameters and observe changes in the system. <a href="projects/particleplayground/particleplayground.html">Try it out</a> (best viewed on non-mobile)!
-                      <br>
-                    </div>
-                  </div>
-                </div>
-                <br>
+      const stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height,
+      });
+      const layer = new Konva.Layer();   
 
-                <div class="card">
-                  <div class="card-image">
-                    <figure class="image is-4by3">
-                      <img src="images/startup.png" alt="Placeholder image">
-                    </figure>
-                  </div>
-                  <div class="card-content">
-                    <div class="media">
-                      <div class="media-content">
-                        <p class="title is-4">ELI</p>
-                        <p class="subtitle is-6">Immersive VR learning lab </p>
-                      </div>
-                    </div>
-                    <div class="content">
-                      Virtual reality lab environment where students can practice and perfect their lab skills withouth being held back by the fear of making (costly) mistakes. Made in collaboration with the University of Sydney.
-                      <br>
-                    </div>
-                  </div>
-                </div>
-                <br>
+      stage.add(layer);
+
+      // global variables
+      const dot_radius = 20;
+      const spacing = 65
+      const dots = 4
+      const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
+      const snap_distance = 50
+
+      let deck_positions = [...Array(dots).keys()].map(dot => 
+        ({
+          x: (stage.width() / 2) - ( (spacing * dots) / 2 ) + ( dot * spacing ), 
+          y: stage.height() / 2,
+        }))
 
 
-                
-              </div>
-            </div>
-          </div>
-      </section>
+      /*
+        HELPER METHODS
+      */
+      const shuffler = (array) => {
+        return array.slice().sort( () => Math.random() - 0.5);
+      }
+
+      const snap = (x, y) => {
+        const closest = deck_positions.reduce((a, b) => {
+          return Math.hypot(a.x - x, a.y, y) < Math.hypot(b.x - x, b.y, y) ? a : b
+        })
+        return {x: closest.x, y: closest.y, distance: Math.hypot(closest.x - x, closest.y - y)}
+      }
+
+      const check = (attempt, answer) => {
+        let correct_col = 0
+        let correct_pos = 0
+
+        for (let i = 0; i < attempt.length; i++) {
+          let attempt_i = attempt[i]
+          let answer_i = answer[i]
+
+          correct_pos += attempt_i === answer_i
+          correct_col += answer.includes(attempt_i)
+        }
+
+        correct_col -= correct_pos
+        return {correct_col: correct_col, correct_pos: correct_pos}
+      }
 
 
+      // game variables
+      const answer = shuffler(colours.slice(0, 4))
+      const ans_result = check(answer, answer)
+      const shu = shuffler(colours.slice(0, 4))
+      const shu_result = check(shu, answer)
+      let previous_guesses = []
 
-    <footer class="footer has-text-centered">
-      <div class="container">
-         <div class="columns">
-          <div class="column is-8-desktop is-offset-2-desktop">
-              <p class="subtitle is-5">
-                Let's get in touch!
-            </p>
-            <p >
-              <small>
-                Send me an email! <a href="mailto:desmidt.emiel@gmail.com">desmidt.emiel@gmail.com</a>
-              </small>
-            </p>
-            <p style="margin-top: 1rem;">
-              <a href="http://bulma.io">
-                <img src="made-with-bulma.png" alt="Made with Bulma" width="128" height="24">
-              </a>
-            </p>
-          </div>
-        </div>
-      </div>
-    </footer>
+      const draw_blank_row = () => {
+        const blank_group = new Konva.Group()
 
-    <script type="text/javascript" src="lib/main.js"></script>
+        for (let dot = 0; dot < dots; dot++) {
+
+          const circle = new Konva.Circle({
+            x: deck_positions[dot].x,
+            y: deck_positions[dot].y,
+            radius: dot_radius,
+            stroke: 'gray',
+            strokeWidth: 1,
+          });
+
+          blank_group.add(circle)
+        }
+        layer.add(blank_group)
+
+      }
+
+      const draw_colour_deck = () => {
+        const columns = 4
+
+        const deck_group = new Konva.Group()
+
+        const x_offset = (stage.width() / 2) - 2 * spacing
+        const y_offset = (stage.height() / 2) - 3 * spacing
+
+        for (let colour = 0; colour < colours.length; colour++) {
+          const x = (colour) % columns
+          const y = Math.floor(colour / columns)
+
+          const circle = new Konva.Circle({
+            x: x_offset + x * spacing,
+            y: y_offset + y * spacing,
+            radius: dot_radius,
+            fill: colours[colour],
+          });
+          
+          circle.draggable(true)
+
+          circle.on('dragend', (e) => {
+            const closest = snap(circle.x(), circle.y())
+
+            if (closest.distance < snap_distance) {
+              circle.position({
+                x: closest.x,
+                y: closest.y
+              })
+            }
+
+          })
+
+          deck_group.add(circle)
+        }
+
+        layer.add(deck_group)
+
+      }
+      
+
+
+      const draw_previous_row = (colours, correct_pos, correct_col, row) => {
+        
+        const steps = 6
+        const height = stage.height() / 2 + (row * spacing)
+        
+        const previous_guess_group = new Konva.Group()
+
+        const x_positions = [...Array(steps).keys()].map(pos => (stage.width() / 2) - ( (spacing * steps) / 2 ) + ( pos * spacing ))
+
+        const correct_post_text = new Konva.Text({
+          x: x_positions[0] - 15,
+          y: height - 20,
+          text: correct_pos,
+          fontSize: 40,
+          fontFamily: 'Calibri',
+        })
+        previous_guess_group.add(correct_post_text)
+
+        for (let step = 0; step < steps - 2; step++) {
+          const circle = new Konva.Circle({
+            x: x_positions[step + 1],
+            y: height,
+            radius: dot_radius,
+            fill: colours[step],
+          });
+
+          previous_guess_group.add(circle)
+        }
+        
+        const correct_col_text = new Konva.Text({
+          x: x_positions[5],
+          y: height - 20,
+          text: correct_col,
+          fontSize: 40,
+          fontFamily: 'Calibri',
+        })
+
+        previous_guess_group.add(correct_col_text)
+
+        layer.add(previous_guess_group)
+      }
+
+
+      draw_colour_deck();
+      draw_blank_row()
+
+      previous_guesses.push({colours: shu, correct_pos: shu_result.correct_pos, correct_col: shu_result.correct_col})
+      previous_guesses.push({colours: answer, correct_pos: ans_result.correct_pos, correct_col: ans_result.correct_col})
+
+      previous_guesses.forEach((guess, index) => {
+        draw_previous_row(guess.colours, guess.correct_pos, guess.correct_col, index + 1)
+      })
+
+    </script>
   </body>
 </html>
