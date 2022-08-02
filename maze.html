@@ -93,7 +93,7 @@
             strokeWidth: 1,
             id: 'reveal_button',
         })
-        reveal.on('click', function () {
+        reveal.on('click touchstart', function () {
             const reveal_map = stage.find('#reveal_map')[0]
             reveal_map.visible(!reveal_map.visible())
         });
