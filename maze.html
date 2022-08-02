@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://unpkg.com/konva@8.3.5/konva.min.js"></script>
+    <meta charset="utf-8" />
+    <title>Master the mind!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script>
+
+        // stage and layer construction
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+
+        const stage = new Konva.Stage({
+            container: 'container',
+            width: width,
+            height: height,
+        });
+        const layer = new Konva.Layer();
+
+
+        // global variables
+        const dot_radius = 20;
+        const spacing = 65
+        const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
+
+
+
+
+
+
+
+
+        var group = new Konva.Group({
+            clipFunc: function (ctx) {
+                ctx.arc(250, 120, 350, 0, Math.PI * 2, false);
+                ctx.arc(500, 320, 200, 0, Math.PI * 2, false);
+
+            },
+
+        });
+
+        const map = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: width,
+            height: height,
+            fill: '#e4e4e4',
+        })
+        const circle = new Konva.Circle({
+            x: 250,
+            y: 120,
+            radius: dot_radius,
+            fill: colours[4],
+            shadowBlur: 50,
+            shadowOffset: { x: 2, y: 5 },
+            shadowOpacity: 1,
+            shadowEnabled: true,
+            draggable: true
+        });
+
+        // group.add(map)
+        group.add(circle)
+
+        layer.add(group)
+
+
+        stage.add(layer);
+
+    </script>
+</body>
+
+</html>

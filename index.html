@@ -137,12 +137,17 @@
           y: y_offset + y * spacing,
           radius: dot_radius,
           fill: colours[colour],
+          shadowBlur: 10,
+          shadowOffset: { x: 2, y: 5 },
+          shadowOpacity: 0.5,
+          shadowEnabled: false
         });
 
         circle.draggable(true)
 
         // check for a dot being positioned into a deck place
         circle.on('dragend', (e) => {
+          circle.shadowEnabled(false)
           const closest = snap(circle.x(), circle.y())
 
           if (closest.distance < snap_distance) {
@@ -163,11 +168,12 @@
 
         // check for a dot being positioned out of a deck place
         circle.on('dragstart', (e) => {
+          circle.shadowEnabled(true)
+
           const closest = snap(circle.x(), circle.y())
 
           if (closest.distance === 0)
             current_guess[closest.position] = undefined
-
         })
 
         deck_group.add(circle)
@@ -176,7 +182,6 @@
       layer.add(deck_group)
 
     }
-
 
 
     const draw_previous_row = (colours, correct_pos, correct_col, row) => {
