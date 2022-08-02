@@ -32,50 +32,72 @@
 
 
         // global variables
-        const dot_radius = 20;
+        const dot_radius = width / 30;
         const spacing = 65
         const colours = ['#cc0000', '#e69138', '#f1c232', '#6aa84f', '#45818e']
 
-
-
-
-
-
-
-
         var group = new Konva.Group({
             clipFunc: function (ctx) {
-                ctx.arc(250, 120, 350, 0, Math.PI * 2, false);
-                ctx.arc(500, 320, 200, 0, Math.PI * 2, false);
-
+                ctx.arc(100, 100, 75, 0, Math.PI * 2, false);
+                ctx.arc(600, 600, 200, 0, Math.PI * 2, false);
+                ctx.rect(width - 150, height - height * .5, 100, height * .6)
+                ctx.arc(width - 100, height - 100, 75, 0, Math.PI * 2, false);
             },
-
         });
 
-        const map = new Konva.Rect({
+        group.add(new Konva.Rect({
             x: 0,
             y: 0,
             width: width,
             height: height,
             fill: '#e4e4e4',
-        })
+            visible: false,
+            id: 'reveal_map',
+        }));
+
         const circle = new Konva.Circle({
-            x: 250,
-            y: 120,
+            x: 100,
+            y: 100,
             radius: dot_radius,
             fill: colours[4],
             shadowBlur: 50,
             shadowOffset: { x: 2, y: 5 },
             shadowOpacity: 1,
             shadowEnabled: true,
+            draggable: true,
+        });
+
+        const destination = new Konva.Circle({
+            x: width - 100,
+            y: height - 100,
+            radius: dot_radius,
+            fill: colours[1],
+            shadowBlur: 100,
+            shadowOffset: { x: 2, y: 5 },
+            shadowOpacity: 1,
+            shadowEnabled: true,
             draggable: true
         });
 
-        // group.add(map)
         group.add(circle)
+        group.add(destination)
+
 
         layer.add(group)
 
+        const reveal = new Konva.Circle({
+            x: width * .95,
+            y: height * .10,
+            radius: dot_radius,
+            stroke: 'gray',
+            strokeWidth: 1,
+            id: 'reveal_button',
+        })
+        reveal.on('click', function () {
+            const reveal_map = stage.find('#reveal_map')[0]
+            reveal_map.visible(!reveal_map.visible())
+        });
+        layer.add(reveal)
 
         stage.add(layer);
 
