@@ -4,10 +4,6 @@
   "description": "Personal web portfolio ",
   "main": "sass/mystyle.scss",
   "homepage": "http://emieldesmidtde.github.io/emieldesmidtde.github.io",
-  "keywords": [
-    "dao",
-    "trustchain"
-  ],
   "author": "Emiel de Smidt",
   "license": "ISC",
   "devDependencies": {
